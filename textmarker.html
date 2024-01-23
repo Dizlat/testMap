@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>Document</title> 
+    <style>
+        .custom-popup {
+            position: absolute;
+            background-color: white;
+            padding: 5px;
+            border: 1px solid black;
+            border-radius: 5px;
+        }
+    </style>
+    <script src="https://maps.api.2gis.ru/2.0/loader.js?pkg=full"></script> 
+    <script type="text/javascript"> 
+        var map, marker, customPopup;
+     
+        DG.then(function () { 
+        
+            map = DG.map('map', { 
+                center: [42.879183, 74.618825], 
+                
+                zoom: 13 
+            }); 
+            marker = DG.marker([42.879183, 74.618825]).addTo(map)
+
+            
+            customPopup = document.createElement('div');
+            customPopup.className = 'custom-popup';
+            customPopup.innerHTML = '256 $';
+            document.body.appendChild(customPopup);
+
+            function updatePopupPosition() {
+                var pos = map.latLngToContainerPoint(marker.getLatLng());
+                console.log("pos", pos);
+                customPopup.style.left = pos.x + 11 + 'px';
+                customPopup.style.top = pos.y - 33 + 'px';
+            }
+            map.on('move', updatePopupPosition);
+            updatePopupPosition();
+        }); 
+    </script>  
+</head> 
+
+<body> 
+    <div id="map" style="width:500px; height:400px"></div> 
+</body> 
+</html>
+</body>
+</html>

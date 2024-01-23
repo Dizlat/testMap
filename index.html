@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>Document</title> 
+    <script src="https://maps.api.2gis.ru/2.0/loader.js?pkg=full"></script> 
+    <script type="text/javascript"> 
+        var map; 
+     
+        DG.then(function () { 
+        
+            map = DG.map('map', { 
+                center: [42.879183, 74.618825], 
+                
+                zoom: 13 
+            }); 
+            DG.marker([42.87904608455754, 74.61750984191896]).addTo(map)
+            // if ('geolocation' in navigator) {
+            //     navigator.geolocation.getCurrentPosition(function(position) {
+            //         var lat = position.coords.latitude;
+            //         var lng = position.coords.longitude;
+
+            //         // Центрирование карты на местоположении пользователя
+            //         map.setView([lat, lng], 13);
+
+            //         // Добавление маркера на текущее местоположение пользователя
+            //         DG.marker([lat, lng]).addTo(map);
+            //     }, function(error) {
+            //         console.error('Ошибка при получении геолокации: ', error);
+            //     });
+            // } else {
+            //     console.error('Геолокация не поддерживается вашим браузером');
+            // }
+
+
+            // map.locate({setView: true, watch: true})
+            //         .on('locationfound', function(e) {
+            //             DG.marker([e.latitude, e.longitude]).addTo(map);
+            //         })
+            //         .on('locationerror', function(e) {
+            //             DG.popup()
+            //               .setLatLng(map.getCenter())
+            //               .setContent('Доступ к определению местоположения отключён')
+            //               .openOn(map);
+            //         });
+
+            map.on('click', function(e) {
+                // Создание маркера на месте клика
+                var marker = DG.marker([e.latlng.lat, e.latlng.lng]).addTo(map);
+
+                // Получение координат маркера и вывод в консоль
+                console.log(marker.getLatLng());
+            });
+
+            if ('geolocation' in navigator) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var lat = position.coords.latitude;
+                    var lng = position.coords.longitude;
+
+                    map.setView([lat, lng], 13);
+
+                    // Создание круга на местоположении пользователя
+                    DG.circle([lat, lng], 1000, {
+                        color: 'blue',
+                        fillColor: 'blue',
+                        fillOpacity: 0.5
+                    }).addTo(map);
+                }, function(error) {
+                    console.error('Ошибка при получении геолокации: ', error);
+                });
+            } else {
+                console.error('Геолокация не поддерживается вашим браузером');
+            }
+        }); 
+    </script>  
+</head> 
+<body> 
+    <div id="map" style="width:500px; height:400px"></div> 
+</body> 
+</html>
+</body>
+</html>
